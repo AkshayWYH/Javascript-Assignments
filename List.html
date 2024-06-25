@@ -1,0 +1,141 @@
+<style>
+    input{
+      margin-bottom :6px;;
+    }
+  </style>
+  <script>
+    names=[{fname:"Akshay",lname:"Zeaple",standard:"Nine",Rollno:101},
+    {fname:"Rajesh",lname:"Randive",standard:"Ten",Rollno:102},
+    {fname:"Pranay",lname:"Kadam",standard:"Eight",Rollno:103}
+  ];
+    function OnSave(){
+        main=document.getElementById("main");
+        main.innerHTML="";
+        for(var i=0;i<names.length;i++){
+            main.innerHTML+="<li><span style='font-size:20px;color: rgb(225,333,120);'>Your Roll Number :  "+names[i].Rollno+", Full Name : "+names[i].fname+" "+names[i].lname+", Standard : "+names[i].standard+"</span><button style='margin-left:200px;height:30px;' class='btn btn-danger' onclick='OnRemove("+i+")'>Remove</button></li>";
+        }
+        console.log(names);
+    }
+    function OnAdd(){
+      first=document.getElementById("first");
+      second=document.getElementById("last");
+      com=document.getElementById("standard");
+      id2=document.getElementById("id");
+      names2={fname:first.value,lname:second.value,standard:com.value,Rollno:id2.value}
+      names.push(names2);
+      OnSave();
+    }
+    function OnSort(){
+        names.sort((a,b)=>{
+            var n1=a.fname.toLowerCase();
+            var n2=b.fname.toLowerCase();
+            if(n1<n2)
+             return -1
+            else if(n1>n2)
+             return 1
+            else
+             return 0
+        });
+        OnSave();
+    }
+    function OnSortDESC(){
+        names.sort((a,b)=>{
+            var n1=a.fname.toLowerCase();
+            var n2=b.fname.toLowerCase();
+            if(n1<n2)
+             return 1
+            else if(n1>n2)
+             return -1
+            else
+             return 0
+        });
+        OnSave();
+    }
+    function OnRemove(a){
+        names.splice(a,1);
+        OnSave();
+    }
+    function OnFilter() {
+      var input = document.getElementById("search").value.toLowerCase();
+      var names3 = names.filter((item) => {
+          return item.fname.toLowerCase().includes(input);
+      });
+
+      main = document.getElementById("main");
+      main.innerHTML = "";
+      if (names3.length === 0) {
+          main.innerHTML = "<li>No results found</li>";
+      } else {
+          for (var i = 0; i < names3.length; i++) {
+              main.innerHTML += "<li><span style='font-size:20px;color: rgb(225,333,120);'>Your Roll Number :-  "+names[i].Rollno+", Full Name : "+names[i].fname+" "+names[i].lname+", Standard : "+names[i].standard+"</span><button style='margin-left:200px;height:30px' class='btn btn-danger' onclick='OnRemove("+i+")'>Remove</button></li>";
+          }
+      }
+  }
+  </script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<body onload="OnSave()" style="background-color:rgb(10,103,111)">
+    <div class="container" id="container">
+        <div class="container" >
+            <div class="row">
+              <div class="col-12" id="ok"><br>
+                  <br>
+                    <label for="filter"><span style="font-size:20px;color: aliceblue; align-items: right;">Filter</span> </label>&nbsp;
+                    <input type="text"  placeholder="Search By Name" id="search">&nbsp;<button class="btn btn-dark" style="width:120px" onclick="OnFilter()">Filter</button>
+                    <button class="btn btn-dark" style="width:120px" onclick="document.getElementById('search').value = ''">Clear</button><br><br><br><br>
+              </div>
+            </div>
+          </div>
+        <h2 style="margin-left:400px;color:rgb(9, 236, 142)"><b>Student Registration Form</b></h2><BR><BR>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="first" style="color: aliceblue;">First Name</label>
+              <input type="text" class="form-control" id="first" name="first" placeholder="Please enter First Name" style="color: rgb(154, 158, 160);">
+            </div>
+          </div>
+          <!--  col-md-6   -->
+    
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="last" style="color: aliceblue;">Last Name</label>
+              <input type="text" class="form-control" placeholder="Please enter Last Name" id="last" name="last" style="color: rgb(154, 158, 160);">
+            </div>
+          </div>
+          <!--  col-md-6   -->
+        </div>
+    
+    
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="email" style="color: aliceblue;">Roll Number</label>
+                <input type="email" class="form-control" id="id"  name="id" placeholder="Please enter Roll Number" style="color: rgb(154, 158, 160);">
+              </div>
+            </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="standard" style="color: aliceblue;">Standard</label>
+                <input type="text" class="form-control" id="standard" name="standard" placeholder="Please enter Standard" style="color: rgb(154, 158, 160);">
+              </div>
+            </div>
+            </div>
+            <br>
+            <div tyle="width:120px">
+                <button  class="btn btn-primary" style="width:120px;margin-left: 392px;" onclick="OnAdd()"><i class="bi bi-plus-lg"></i>Submit</button>
+                <button class="btn btn-success" style="width:120px" onclick="OnSort()"><i class="bi bi-sort-alpha-down"></i>Sort A-Z</button>
+                <button class="btn btn-success" style="width:120px" onclick="OnSortDESC()"><i class="bi bi-sort-alpha-down"></i>Sort Z-A</button>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 150px;"></div>
+    <ol id="main" style="color: aliceblue;font-size:20px;margin-left: 350px;margin-right: 20px;">
+      
+    </ol>
+</div>
+</body>
+
+
+
+  
